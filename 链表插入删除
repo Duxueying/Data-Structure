@@ -1,0 +1,125 @@
+class Node 
+{
+	int val;	
+	Node next;	// 如果 next == null 表示是最后一个结点
+	public Node(int val) //构造方法对属性初始化
+	{
+		this.val = val;
+		this.next = null;
+	}
+	public String toString() 
+	{
+		return String.format("Node(%d)", val);
+	}
+} 
+public class MyLinkedList 
+{
+	public static void main(String[] args)
+	{
+		/* head的意思是链表的第一个结点,通过第一个结点，就可以找到完整的链表的所有结点所以，链表的第一个结点往往代表整个链表,head == null 表示第一个结点不存在
+		 也就是整个链表为空
+		 头插
+		int val = 0;
+		1. 结点
+		Node node = new Node(val);
+		 2. 让原来的 head 成为 node 的下一个结点
+		node.next = head;
+		3. 更新第一个结点的引用
+		head = node;
+		pushFront(head, 0);
+		*/
+		Node head = null;
+		head = pushFront(head, 0);
+		head = pushFront(head, 1);
+		head = pushFront(head, 2);
+		
+		print(head);	//打印2 1 0
+		
+		// 尾插
+		head = popFront(head);
+		print(head);	// 1 0
+		
+		head = pushBack(head, 10);
+		head = pushBack(head, 20);
+		head = pushBack(head, 30);
+		print(head);	// 1 0 10 20 30
+		head = popBack(head);
+		head = popBack(head);
+		head = popBack(head);
+		head = popBack(head);
+		head = popBack(head);
+		
+		head = popBack(head);	// 报错
+		print(head);		// 空
+		
+		head = pushBack(head, 100);
+		print(head);		// 100
+	}
+	
+	// 打印
+	private static void print(Node head)  //打印
+	{
+		System.out.println("打印链表：");
+		for (Node cur = head; cur != null; cur = cur.next) //遍历链表
+		{
+			System.out.print(cur + " --> ");
+		}
+		System.out.println("null");
+	}
+	private static Node pushFront(Node head, int val) //头插
+	{
+		Node node = new Node(val);  //把要插入的数据装入一个节点
+		node.next = head;// 2. 让原来的 head 成为 node 的下一个结点
+		return node; //更新最新的这个节点为新节点
+	}	
+	private static Node pushBack(Node head, int val) //尾插
+	{
+		Node node = new Node(val);  //把要插入的数据装入一个节点
+		if (head == null) //链表为空的情况
+		{
+			return node;
+		} 
+		else 
+		{
+			Node last = head;
+			while (last.next != null)
+			{
+				last = last.next;
+			}
+			last.next = node;	
+			return head;
+		}
+	}
+	private static Node popFront(Node head) //头删
+	{
+		if (head == null) //链表为空
+		{
+			System.err.println("空链表无法删除");
+			return null;
+		}
+		// 原来第一个结点，会因为没有引用指向而被回收
+		return head.next; //头删直接return head.next就行
+	}
+	private static Node popBack(Node head)   //尾删
+	{
+		if (head == null) //链表为空
+		{
+			System.err.println("空链表无法删除");
+			return null;
+		}
+		if (head.next == null) //只有一个节点
+		{
+			return null;
+		} 
+		else 
+		{
+			Node lastSecond = head;  //
+			while (lastSecond.next.next != null) 
+			{
+				lastSecond = lastSecond.next;
+			}
+			lastSecond.next = null;
+			return head;
+		}
+	}
+}
