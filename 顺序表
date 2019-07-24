@@ -1,0 +1,166 @@
+public class MyarrayList
+{
+	private int[] array;     //属性
+	private int size;
+	public MyarrayList()  //构造方法初始化属性
+	{
+		array =new int[2];
+		size=0;
+	}
+	public void pushBack(int element)   //尾插,时间复杂度为O(1)
+	{
+		ensureCapacity();  //保证空间够用
+		array[size++]=element;
+	}
+	public void pushFront(int element) //头插
+	{
+		ensureCapacity();
+		for(int i=size;i>=1;i--)
+		{
+			array[i]=array[i-1]; //统一往后移
+		}
+		array[0]=element;  //把要插得元素放在首位
+		size++;
+	}
+	public void insert(int index,int element) //插入操作有两个参数，从哪儿插，插什么
+	{
+		if (index < 0 || index > size)  //下标合法性检验
+		{
+			System.err.println("下标错误");
+			return;
+		}
+		ensureCapacity();
+		for(int i=size-1;i>index;i--)
+		{
+			array[i+1]=array[i];
+		}
+		array[index]=element;
+		size++;
+	}
+	public void popBack()  //尾删
+	{
+		if (size <= 0)
+		{
+			System.err.println("顺序表为空");
+			return;
+		}
+		array[--size]=0;
+	}
+	public void popFront() //头删
+	{
+		if (size <= 0) 
+		{
+			System.err.println("顺序表为空");
+			return;
+		}
+		for (int i = 0; i < size - 1; i++)
+		{
+			array[i] = array[i + 1];   //从前往后移
+		}
+		array[--size] = 0;
+	}
+	public void earse(int index) //指定下标删除
+	{
+		if (size <= 0) 
+		{
+			System.err.println("顺序表为空");
+			return;
+		}
+		if (index < 0 || index >= size)
+		{
+			System.err.println("下标错误");
+			return;
+		}
+		for (int i = index + 1; i < size; i++)
+		{
+			array[i - 1] = array[i];
+		}
+		array[--size] = 0;
+	}
+	public void removeAll(int element) {
+		/* 方法1：时间复杂度为O(n^2) 空间复杂度为O(1)
+		int index;
+		while ((index = indexOf(element)) != -1) 
+		{
+			earse(index);
+		}
+		*/
+		
+		/* 方法2：时间复杂度为:O(n)	空间复杂度为O(n)
+		int[] newArray = new int[array.length];
+		int j = 0;
+		for (int i = 0; i < size; i++) 
+		{
+			if (array[i] != element) 
+			{
+				newArray[j++] = array[i];
+			}
+		}
+		array = newArray;
+		size = j;
+		*/
+		
+		// 方法3：时间复杂度为O(n)	空间复杂度为O(1)
+		int j = 0;
+		for (int i = 0; i < size; i++) 
+		{
+			if (array[i] != element)
+			{
+				array[j++] = array[i];
+			}
+		}
+		size = j;
+	}
+	public void print() //打印
+	{
+		System.out.println("打印顺序表"+array.length);
+		for(int i=0;i<size;i++)
+		{
+			System.out.println(array[i]+" ");
+		}
+		System.out.println();
+	}
+	private void ensureCapacity()  //保证空间够用
+	{
+		if (size < array.length) 
+		{
+			return;
+		}
+		int newCapacity = array.length * 2; //经验值大概是原来的二倍
+		int[] newArray = new int[newCapacity];
+		for (int i = 0; i < size; i++) 
+		{
+			newArray[i] = array[i];
+		}
+		array = newArray;
+	}
+	public static void main(String[] args)
+	{
+		MyarrayList list=new MyarrayList();
+		list.print();
+		list.pushBack(1);
+		list.pushBack(2);
+		list.pushBack(3);
+		list.print();	// 1 2 3
+		list.pushFront(10);
+		list.pushFront(20);
+		list.removeAll(10);
+		list.pushFront(30);
+		list.print();	// 30 20 10 1 2 3
+		list.insert(3, 100);
+		list.print();	// 30 20 10 100 1 2 3
+		list.insert(20, 200);	// 报错
+		list.earse(2);
+		list.earse(2);
+		list.print();	// 30 20 1 2 3
+		list.popFront();
+		list.popFront();
+		list.popFront();
+		list.print();	// 2 3
+		list.popBack();
+		list.popBack();
+		list.print();	// 空的
+	    list.popBack();	// 报错
+		list.print();
+	}
+}
