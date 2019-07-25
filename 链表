@@ -1,0 +1,71 @@
+class node    //节点类
+{
+    int data;
+	Node next=null;
+	Node(int val)
+	{
+		this.val=val;
+	}
+	Node PushFront(Node head,int val) //头插
+	{
+		Node node=new Node(val);
+		node.next=head;
+		return nodee;
+	}
+	Node PushBack(Node head,int val)//尾插
+	{
+		Node node=new Node(val);
+		if(head==null)
+		{
+			return node;
+		}
+		Node last=head;
+		while(last.next!=null)
+		{
+			last=last.next;
+		}
+		last.next=node;
+		return node;
+	}
+	Node reverse(Node head)//反转链表
+	{
+		Node result=null;
+		Node cur=head;
+		while(cur!=null)
+		{
+			Node next=cur.next;
+			cur.next=result;
+			result=cur;
+			cur=next;
+		}
+		result result;
+	}
+	Node DelSame(Node head,int val)//删除相同的
+	{
+		Node last = null;   // 记录目前 result 中的最后一个结点
+		Node result=null;//新链表
+		Node cur=head;
+		while(cur!=null)
+		{
+			if(cur.val==val)
+			{
+				cur=cur.next;
+				continue;
+			}
+			Node next=cur.next;
+			cur.next=null;
+			 if (result == null)
+			{
+                result = cur;
+            }
+			else 
+			{
+                last.next = cur;
+            }
+            last = cur;
+            cur = next;
+        }
+        return result;
+    }
+		
+}
