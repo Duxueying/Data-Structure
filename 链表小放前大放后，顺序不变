@@ -1,0 +1,80 @@
+class Node
+{
+	int val;
+    Node next = null;
+    public Node(int val)
+	{
+        this.val = val;
+    }
+}
+public class Solution
+{
+	  static Node createList() 
+	{
+        Node n1 = new Node(1);
+        Node n2 = new Node(3);
+        Node n3 = new Node(2);
+        Node n4 = new Node(1);
+        Node n5 = new Node(5);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+        return n1;
+    }
+	 static Node partiton(Node head,int k)
+	{
+		Node beforStart=null; //分割后k之前的头节点
+		Node beforEnd=null; //分割后k之前的尾节点
+		Node afterStart=null; //分割后k之后的头节点
+		Node afterEnd=null; //分割后k之后的尾节点
+		Node cur=head;
+		while(cur!=null)
+		{
+			Node curNode=cur.next; //定义一个节点指向cur节点后继，为了把原来的单链表销毁掉
+			cur.next=null;
+			if(cur.val<k)
+			{
+				if(beforStart==null)
+				{
+					beforStart=cur;
+					beforEnd=cur;
+				}
+				else
+				{
+					beforEnd.next=cur;
+					beforEnd=cur;
+				}
+			}
+			else
+			{
+				if(afterStart==null)
+				{
+					afterStart=cur;
+					afterEnd=afterStart;
+				}
+				else
+				{
+					afterEnd.next=cur;
+					afterEnd=cur;
+				}
+			}
+			cur=curNode;
+		}
+		if(beforStart==null)
+		{
+			return afterStart;
+		}
+		beforEnd.next=afterStart;
+		return beforStart;
+	}			
+	public static void main(String[] args) 
+	{
+        Node head = createList();
+		Node cur=partiton(head,2);
+		for(cur=head;cur!=null;cur=cur.next)
+		{
+			System.out.println(cur.val);
+		}
+	}	
+}
