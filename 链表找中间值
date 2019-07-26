@@ -1,0 +1,60 @@
+class Node
+{
+    int val;
+    Node next = null;
+    public Node(int val)
+    {
+        this.val = val;
+    }
+}
+public class Solution
+{
+    static Node createList()
+    {
+        Node n1 = new Node(1);
+        Node n2 = new Node(2);
+        Node n3 = new Node(3);
+        Node n4 = new Node(4);
+        Node n5 = new Node(5);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+        return n1;
+    }
+    static Node mid(Node head)  //方法一
+    {
+        Node cur=head;
+        int length=0;
+        for(cur=head;cur!=null;cur=cur.next)
+        {
+            length++;
+        }
+        cur=head;
+        int len=length/2;
+        for(int i=0;i<len;i++)
+        {
+            cur=cur.next;
+        }
+        return cur;
+    }
+
+	/*public Node mid(Node head)  //方法二
+	{
+		Node fast=head;
+		Node slow=head;
+		while(fast!=null&&fast.next!=null)
+		{
+			fast=fast.next.next;
+			slow=slow.next;
+		}
+		return slow;
+	}*/
+
+    public static void main(String[] args)
+    {
+        Node head = createList();
+        Node cur=mid(head);;
+        System.out.println(cur.val);
+    }
+}
