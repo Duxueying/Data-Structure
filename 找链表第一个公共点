@@ -1,0 +1,34 @@
+public getlen(Node head)
+{
+	int len=0;
+	Node cur=head;
+	for(cur=head;cur!=null;cur=cur.next;)
+	{
+		len++
+	}
+	return len;
+}
+Node Same(Node heada,Node headb)
+{
+	int lenA=getlen(heada);
+	ini lenB=getlen(headb);
+	Node long=heada;
+	Node short=headb;
+	int diff=lenA-lenB;
+	if(lenA<lenB)
+	{
+		long=headb;
+		short=heada;
+		diff=lenB-lenA)
+	}
+	for(int i=0;i<diff;i++)
+	{
+		long=long.next;
+	}
+	while(long!=short)
+	{
+		long=long.next;
+		short=short.next;
+	}
+	return long;
+}
