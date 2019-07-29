@@ -1,0 +1,200 @@
+class node
+{
+	int val;
+	Node next=null;
+	Node pre=null;
+    Node(int val)
+	{
+		this.val=val;
+	}
+}
+public class MyLinkedList2
+{
+	private Node head=null;
+	private Node last=null;
+	private int size=0;
+	public void pushFront(int val)
+	{
+		Node node=new Node(val);
+		node.next=head;
+		if(head!=null)
+		{
+			head.pre=node;
+		}
+		else
+		{
+			last=node;
+		}
+		head=node;
+		size++;
+		}
+	public void popFront(Node head)
+	{
+		if(size<=0)
+		{
+			System.out.println("链表为空");
+		}
+		head=head.next;
+		if(head!=null)
+		{
+			head.pre=null;
+		}
+		else
+		{
+			last=null;
+		}
+		size--;
+	}
+	void pushBack(int val)
+	{
+		Node node=new Node(val);
+		if(last==null)
+		{
+			head=node;
+		}
+		else
+		{
+			last.next=node;
+		}
+		node.pre=last;
+		last=node;
+		size++;
+		}
+    void popBack()
+	{
+		if(size<=0)
+		{
+			System.out.println("链表为空");
+		}
+		if(last==head)
+		{
+			last=head=null;
+		}
+		else
+		{
+			last.pre.next=null;
+			last=last.pre;
+		}
+		size--;
+	}
+	public void add(int Index,int val)
+	{
+		if(Index<0||Index>size)
+		{
+			System.out.println("下标错误");
+		}
+		if(Index==0)
+		{
+			pushFront(val);
+		}
+		if(Index==size)
+		{
+			pushBack(val);
+		}
+		else
+		{
+			Node pos=getNode(Index);
+			Node node=new Node(val);
+			node.pre=pos.pre;
+			node.next=pos;
+			node.pre.next=node;
+			node.next.pre=node;
+			size++;
+		}
+	}
+	public void remove(int Index)
+	{
+		if(size<=0)
+		{
+			System.out.println("链表为空")
+		}
+		if(Index<0||Index>size)
+		{
+			System.out.println("下标错误");
+		}
+		if(Index==0)
+		{
+			popFront();
+		}
+		else if(Index==size-1)
+		{
+			popBack();
+		}
+		else
+		{
+			Node pos=getNode(Index);
+			pos.pre.next=pos.next;
+			pos.next.pre=pos.pre;
+		    size--;
+		}
+	}
+	private Node getNode(int Index)
+	{
+		int backwardIndex = size - Index - 1;
+        Node pos;
+        if (Index <= backwardIndex)
+		{
+            pos = head;
+            for (int i = 0; i < Index; i++)
+			{
+                pos = pos.next;
+            }
+        } 
+		else
+		{
+            pos = last;
+            for (int i = 0; i < backwardIndex; i++)
+			{
+                pos = pos.prev;
+            }
+        }
+        return pos;
+	}
+	public int size()
+	{
+        return size;
+    }
+    public boolean isEmpty()
+	{
+        return size == 0;
+    }
+    public void reset()
+	{
+        head = last = null;
+        size = 0;
+    }
+	public static void main(String[] args)
+	{
+        MyLinkedList2 list = new MyLinkedList2();
+        list.pushFront(1);
+        list.pushFront(2);
+        list.pushFront(3);
+        System.out.println("3 2 1");
+        list.popFront();
+        list.popFront();
+        list.popFront();
+        System.out.println("");
+        list.pushBack(10);
+        list.pushBack(20);
+        list.pushBack(30);
+        System.out.println("10 20 30");
+        list.popBack();
+        list.popBack();
+        list.popBack();
+        System.out.println("");
+        list.pushBack(1);
+        list.pushBack(2);
+        list.pushBack(3);
+        list.pushBack(4);
+        list.pushBack(5);
+        System.out.println("1 2 3 4 5");
+        list.add(1, 10);
+        System.out.println("1 10 2 3 4 5");
+        list.add(5, 20);
+        System.out.println("1 10 2 3 4 20 5");
+        list.remove(1);
+        System.out.println("1 2 3 4 20 5");
+        list.remove(4);
+        System.out.println("1 2 3 4 5");
+    }
+}
