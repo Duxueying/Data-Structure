@@ -1,0 +1,63 @@
+class MyCircularQueue {
+    private int[] queue;
+    private int front;
+    private int rear;
+    private int maxLen;
+    private int len=0;
+
+    /** Initialize your data structure here. Set the size of the queue to be k. */
+    public MyCircularQueue(int k) {
+        queue=new int[k];
+        front=0;
+        len=0;
+        rear=0;
+        maxLen=k;
+        
+    }
+    
+    /** Insert an element into the circular queue. Return true if the operation is successful. */
+    public boolean enQueue(int value) {
+        if(len==maxLen){
+            return false;
+        }
+        queue[rear]=value;
+        rear=(rear+1)%maxLen;
+        return true;
+    }
+    
+    /** Delete an element from the circular queue. Return true if the operation is successful. */
+    public boolean deQueue() {
+        if(len==0){
+            return false;
+        }
+        len--;
+        front=(front+1)%maxLen;
+        return true;
+    }
+    
+    /** Get the front item from the queue. */
+    public int Front() {
+        if(len==0){
+            return -1;
+        }
+        return queue[front];
+    }
+    
+    /** Get the last item from the queue. */
+    public int Rear() {
+        if(len==0){
+            return -1;
+        }
+        return queue[(rear+maxLen-1)%maxLen];
+    }
+    
+    /** Checks whether the circular queue is empty or not. */
+    public boolean isEmpty() {
+        return len==0;
+    }
+    
+    /** Checks whether the circular queue is full or not. */
+    public boolean isFull() {
+        return len==maxLen;
+    }
+}
